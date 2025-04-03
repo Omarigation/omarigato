@@ -1,0 +1,170 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Anime-Themed Custom Styles */
+
+:root {
+  --primary-color: #6A0DAD;     /* Vibrant purple */
+  --secondary-color: #F66B97;   /* Soft pink */
+  --accent-color: #52D3D8;      /* Turquoise */
+  --bg-dark: #1F1F3A;           /* Dark blue-purple */
+  --bg-light: #F5F5FF;          /* Light lavender */
+  --text-light: #FFFFFF;        /* White text */
+  --text-dark: #2D2D42;         /* Dark navy text */
+}
+
+body {
+  font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  background-image: 
+    radial-gradient(circle at top right, rgba(106, 13, 173, 0.1), transparent 400px),
+    radial-gradient(circle at bottom left, rgba(82, 211, 216, 0.1), transparent 400px);
+  background-attachment: fixed;
+}
+
+/* Anime-style button */
+.btn-anime {
+  @apply px-6 py-2 rounded-full font-bold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-opacity-50;
+}
+
+.btn-primary {
+  @apply btn-anime bg-purple-700 text-white hover:bg-purple-800 focus:ring-purple-500;
+  background: linear-gradient(45deg, var(--primary-color), #9A4DFF);
+  box-shadow: 0 4px 12px rgba(106, 13, 173, 0.2);
+}
+
+.btn-secondary {
+  @apply btn-anime bg-pink-500 text-white hover:bg-pink-600 focus:ring-pink-400;
+  background: linear-gradient(45deg, var(--secondary-color), #FF95B5);
+  box-shadow: 0 4px 12px rgba(246, 107, 151, 0.2);
+}
+
+.btn-accent {
+  @apply btn-anime bg-teal-400 text-white hover:bg-teal-500 focus:ring-teal-300;
+  background: linear-gradient(45deg, var(--accent-color), #7EEDF3);
+  box-shadow: 0 4px 12px rgba(82, 211, 216, 0.2);
+}
+
+/* Anime-style card */
+.card-anime {
+  @apply bg-white rounded-lg p-6 transition-all duration-300;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.card-anime:hover {
+  box-shadow: 0 12px 32px rgba(106, 13, 173, 0.15);
+  transform: translateY(-5px);
+}
+
+/* Anime-style inputs */
+.input-anime {
+  @apply bg-purple-50 border border-purple-200 text-gray-800 rounded-lg p-3 w-full focus:ring-2 focus:ring-purple-400 focus:border-transparent transition duration-200;
+}
+
+/* Anime-style nav links */
+.nav-link {
+  @apply inline-block px-4 py-2 font-semibold transition-all duration-200;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 80%;
+}
+
+.nav-link.active::after {
+  width: 80%;
+}
+
+/* Anime-style section divider */
+.divider-anime {
+  height: 4px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--accent-color), 
+    var(--secondary-color),
+    var(--primary-color),
+    var(--secondary-color),
+    var(--accent-color),
+    transparent);
+  margin: 2rem 0;
+  border-radius: 2px;
+}
+
+/* Anime-style page transition animations */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 400ms, transform 400ms;
+}
+
+.page-exit {
+  opacity: 1;
+}
+
+.page-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* Loading animation */
+.loading-anime {
+  @apply relative inline-block w-16 h-16;
+}
+
+.loading-anime::after {
+  content: '';
+  @apply absolute inset-0 rounded-full;
+  background: conic-gradient(transparent, var(--primary-color));
+  animation: spin 1s linear infinite;
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 0);
+}
+
+.loading-anime::before {
+  content: '';
+  @apply absolute inset-2 rounded-full bg-white;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # FastAPI Backend
+  backend:
+    build: ./backend
+    container_name: anime-portal-backend
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - uploads:/app/uploads
+    environment:
+      - DB_HOST=db
+      - DB_USER=sa
+      - DB_PASSWORD=YourStrong@Passw0rd
+      - DB_NAME=anime_portal
+      - DB_DRIVER=ODBC+Driver+17+for+SQL+Server
+      - SECRET_KEY=your-secret-key-change-in-production
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=http://localhost:3000/auth/google/callback
+      - UPLOAD_FOLDER=/app/uploads
+      - PYTHONPATH=/app
+    networks:
+      - anime-portal-network
+
+  # React Frontend
+  frontend:
+    build: ./frontend
+    container_name: anime-portal-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000/api
+      - REACT_APP_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+    networks:
+      - anime-portal-network
+
+  # MS SQL Server Database
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: anime-portal-db
+    restart: always
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_PID=Express
+    volumes:
+      - mssql-data:/var/opt/mssql
+    networks:
+      - anime-portal-network
+
+volumes:
+  mssql-data:
+  uploads:
+
+networks:
+  anime-portal-network:
+    driver: bridge
